@@ -3,7 +3,7 @@
     "promptValues": {
       "packageName": "com.mycompany.myapp"
     },
-    "jhipsterVersion": "5.3.4",
+    "jhipsterVersion": "6.5.1",
     "applicationType": "monolith",
     "baseName": "cms",
     "packageName": "com.mycompany.myapp",
@@ -15,20 +15,25 @@
     "websocket": false,
     "databaseType": "sql",
     "devDatabaseType": "h2Disk",
-    "prodDatabaseType": "mysql",
+    "prodDatabaseType": "postgresql",
     "searchEngine": false,
     "messageBroker": false,
     "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSwaggerCodegen": false,
-    "jwtSecretKey": "ZGQ5Y2ExMDM1MTVhNjAyZTNkZDE1OTcwMzY0MmZhOGY0MWFkNzc3YjNiM2UyMTJkMmFkNjQ5YmUwYmZlOWNkNDVlZWRkZDliNGYxNzllY2E3YzMyZTA2NGQyMmYxZGMyZWVlZmQyOTVmNmU0MzFkOWM0MmMzZjYwNTcyZjA4ZGY=",
-    "clientFramework": "angularX",
+    "jwtSecretKey": "MDBlYjE1MjVlMzdmZDQ1NGY5YTQ1MWJlYTU1ZjVjY2ZiNjY5N2UxYWI4MTc3YjdkZTgxMWQ4MGViYTA4ZTkxMTBiODAwMjRhMDkxOTI0ODY0YWEyMWNlNDgyOTUzOWY3N2I1M2Q4MDA2MWY0NTY0YjU4OTMwZTMwOTU3MmY5MDM=",
+    "embeddableLaunchScript": false,
     "useSass": true,
     "clientPackageManager": "npm",
-    "testFrameworks": [
-      "gatling"
-    ],
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "testFrameworks": ["gatling"],
     "jhiPrefix": "jhi",
-    "enableTranslation": false
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": []
   }
 }

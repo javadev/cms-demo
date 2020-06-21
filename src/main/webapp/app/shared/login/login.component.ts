@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
@@ -7,81 +8,85 @@ import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 @Component({
-    selector: 'jhi-login-modal',
-    templateUrl: './login.component.html'
+  selector: 'jhi-login-modal',
+  templateUrl: './login.component.html'
 })
 export class JhiLoginModalComponent implements AfterViewInit {
-    authenticationError: boolean;
-    password: string;
-    rememberMe: boolean;
-    username: string;
-    credentials: any;
+  authenticationError: boolean;
 
-    constructor(
-        private eventManager: JhiEventManager,
-        private loginService: LoginService,
-        private stateStorageService: StateStorageService,
-        private elementRef: ElementRef,
-        private renderer: Renderer,
-        private router: Router,
-        public activeModal: NgbActiveModal
-    ) {
-        this.credentials = {};
-    }
+  loginForm = this.fb.group({
+    username: [''],
+    password: [''],
+    rememberMe: [false]
+  });
 
-    ngAfterViewInit() {
-        setTimeout(() => this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#username'), 'focus', []), 0);
-    }
+  constructor(
+    private eventManager: JhiEventManager,
+    private loginService: LoginService,
+    private stateStorageService: StateStorageService,
+    private elementRef: ElementRef,
+    private renderer: Renderer,
+    private router: Router,
+    public activeModal: NgbActiveModal,
+    private fb: FormBuilder
+  ) {}
 
-    cancel() {
-        this.credentials = {
-            username: null,
-            password: null,
-            rememberMe: true
-        };
-        this.authenticationError = false;
-        this.activeModal.dismiss('cancel');
-    }
+  ngAfterViewInit() {
+    setTimeout(() => this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#username'), 'focus', []), 0);
+  }
 
-    login() {
-        this.loginService
-            .login({
-                username: this.username,
-                password: this.password,
-                rememberMe: this.rememberMe
-            })
-            .then(() => {
-                this.authenticationError = false;
-                this.activeModal.dismiss('login success');
-                if (this.router.url === '/register' || /^\/activate\//.test(this.router.url) || /^\/reset\//.test(this.router.url)) {
-                    this.router.navigate(['']);
-                }
+  cancel() {
+    this.authenticationError = false;
+    this.loginForm.patchValue({
+      username: '',
+      password: ''
+    });
+    this.activeModal.dismiss('cancel');
+  }
 
-                this.eventManager.broadcast({
-                    name: 'authenticationSuccess',
-                    content: 'Sending Authentication Success'
-                });
+  login() {
+    this.loginService
+      .login({
+        username: this.loginForm.get('username').value,
+        password: this.loginForm.get('password').value,
+        rememberMe: this.loginForm.get('rememberMe').value
+      })
+      .subscribe(
+        () => {
+          this.authenticationError = false;
+          this.activeModal.dismiss('login success');
+          if (
+            this.router.url === '/account/register' ||
+            this.router.url.startsWith('/account/activate') ||
+            this.router.url.startsWith('/account/reset/')
+          ) {
+            this.router.navigate(['']);
+          }
 
-                // previousState was set in the authExpiredInterceptor before being redirected to login modal.
-                // since login is succesful, go to stored previousState and clear previousState
-                const redirect = this.stateStorageService.getUrl();
-                if (redirect) {
-                    this.stateStorageService.storeUrl(null);
-                    this.router.navigate([redirect]);
-                }
-            })
-            .catch(() => {
-                this.authenticationError = true;
-            });
-    }
+          this.eventManager.broadcast({
+            name: 'authenticationSuccess',
+            content: 'Sending Authentication Success'
+          });
 
-    register() {
-        this.activeModal.dismiss('to state register');
-        this.router.navigate(['/register']);
-    }
+          // previousState was set in the authExpiredInterceptor before being redirected to login modal.
+          // since login is successful, go to stored previousState and clear previousState
+          const redirect = this.stateStorageService.getUrl();
+          if (redirect) {
+            this.stateStorageService.storeUrl(null);
+            this.router.navigateByUrl(redirect);
+          }
+        },
+        () => (this.authenticationError = true)
+      );
+  }
 
-    requestResetPassword() {
-        this.activeModal.dismiss('to state requestReset');
-        this.router.navigate(['/reset', 'request']);
-    }
+  register() {
+    this.activeModal.dismiss('to state register');
+    this.router.navigate(['/account/register']);
+  }
+
+  requestResetPassword() {
+    this.activeModal.dismiss('to state requestReset');
+    this.router.navigate(['/account/reset', 'request']);
+  }
 }
