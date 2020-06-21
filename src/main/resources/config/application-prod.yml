@@ -40,8 +40,7 @@ spring:
       poolName: Hikari
       auto-commit: false
   jpa:
-    database-platform: io.github.jhipster.domain.util.FixedPostgreSQL95Dialect
-    database: POSTGRESQL
+    database-platform: io.github.jhipster.domain.util.FixedPostgreSQL10Dialect
     show-sql: false
     properties:
       hibernate.id.new_generator_mappings: true
@@ -114,7 +113,7 @@ jhipster:
         # - In the JHipster Registry (which includes a Spring Cloud Config server)
         # - In a separate `application-prod.yml` file, in the same folder as your executable JAR file
         # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
-        base64-secret: MDBlYjE1MjVlMzdmZDQ1NGY5YTQ1MWJlYTU1ZjVjY2ZiNjY5N2UxYWI4MTc3YjdkZTgxMWQ4MGViYTA4ZTkxMTBiODAwMjRhMDkxOTI0ODY0YWEyMWNlNDgyOTUzOWY3N2I1M2Q4MDA2MWY0NTY0YjU4OTMwZTMwOTU3MmY5MDM=
+        base64-secret: OWUzOTZhN2QzZGIzMjRhMGRlNDFhYTAyMGU4ZDViYzkyN2E2Yjk0NmViNGZlOGZlZTIyNTdmMTg4YmE3ZTQxOWE1OTg3M2I3NTIyZmMyM2NkOTU2NDMyZjFiMjQxMTBkZWEyM2M5MDNlMGVhNTFjMmEwMjExMjk1MzA5ZDI5YWQ=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

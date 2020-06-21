@@ -1,7 +1,7 @@
 version: '2'
 services:
   cms-postgresql:
-    image: postgres:11.5
+    image: postgres:12.1
     # volumes:
     #     - ~/volumes/jhipster/cms/postgresql/:/var/lib/postgresql/data/
     environment:

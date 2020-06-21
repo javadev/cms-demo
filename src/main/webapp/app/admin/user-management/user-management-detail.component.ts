@@ -8,13 +8,11 @@ import { User } from 'app/core/user/user.model';
   templateUrl: './user-management-detail.component.html'
 })
 export class UserManagementDetailComponent implements OnInit {
-  user: User;
+  user: User | null = null;
 
   constructor(private route: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.route.data.subscribe(({ user }) => {
-      this.user = user.body ? user.body : user;
-    });
+  ngOnInit(): void {
+    this.route.data.subscribe(({ user }) => (this.user = user));
   }
 }
