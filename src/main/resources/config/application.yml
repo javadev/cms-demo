@@ -131,14 +131,7 @@ jhipster:
   #     allow-credentials: true
   #     max-age: 1800
   mail:
-    host: smtp.sendgrid.net
-    port: 587
-    username: ${SENDGRID_USERNAME}
-    password: ${SENDGRID_PASSWORD}
-    protocol: smtp
-    tls: false
-    auth: true
-    from: cms@cms-demo-jhipster.herokuapp.com
+    from: cms@localhost
   swagger:
     default-include-pattern: /api/.*
     title: cms API
